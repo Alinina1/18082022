@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+
+body{
+    font-family: 'PT Sans', sans-serif;
+    font-size: 18px;
+}
+
+/*li input[checked = "true"]{*/
+/*    font-weight: bold;*/
+/*}*/
+
+li {
+    list-style-type: none;
+    margin: 10px 5px 10px 5px;
+}
+
+li:before {
+    content: "\1F449";
+}
+
+.title{
+    padding: 2% 2% 0 2%;
+    font-size: 22px;
+    font-weight: bold;
+}
+.my-flex-box{
+    display: flex;
+    flex-direction: row;
+}
+
+#left-div{
+    width: 50%;
+    background: bisque;
+}
+
+#right-div{
+    padding-top: 20px;
+    width: 50%;
+    background: burlywood;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#right-div button{
+    width: 20%;
+    box-sizing: border-box;
+    padding: 0 20px;
+    margin: 0 15px 15px 0;
+    outline: none;
+    border: none;
+    border-radius: 6px;
+    height: 40px;
+    line-height: 40px;
+    text-decoration: none;
+    color: #385898;
+    background-color: #e7f3ff;
+    cursor: pointer;
+}
+
+.checkedItem{
+    background: brown;
+    font-weight: bold;
+}
+
