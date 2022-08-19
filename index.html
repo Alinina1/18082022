@@ -10,7 +10,7 @@
 <div class="my-flex-box">
     <div id="left-div">
         <div class="title">Список дел:</div>
-        <ul id="my-todo-list" >
+        <ul id="my-todo-list">
             <li>Дело 1</li>
             <li>Дело 2</li>
             <li>Дело 3</li>
@@ -23,6 +23,12 @@
         <button onclick="up()">Вверх</button>
         <button onclick="down()">Вниз</button>
     </div>
+</div>
+<div class="hidden newValueBlock" id="hidden-block">
+    <div>Введите новое значение:</div>
+    <input type="text" style="margin: 2%">
+    <input type="color">
+    <button onclick="saveNewValue(this)">Сохранить</button>
 </div>
 </body>
 </html>
