@@ -94,3 +94,7 @@ button{
     background-color: #e7f3ff;
     cursor: pointer;
 }
+
+#inputName{
+    margin: 2%;
+}

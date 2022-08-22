@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Task 3</title>
     <script type="text/javascript" src="public/js/scripts.js"></script>
     <link href="public/css/styles.css" rel="stylesheet">
+    <link type="image/png" sizes="16x16" rel="icon" href="public/img/icon.png">
 </head>
 <body>
 <div class="my-flex-box">
@@ -26,9 +27,9 @@
 </div>
 <div class="hidden newValueBlock" id="hidden-block">
     <div>Введите новое значение:</div>
-    <input type="text" style="margin: 2%">
-    <input type="color">
-    <button onclick="saveNewValue(this)">Сохранить</button>
+    <input type="text" id="inputName">
+    <input type="color" id="inputColor">
+    <button onclick="saveNewValue(this)" id="saveBtn">Сохранить</button>
 </div>
 </body>
 </html>

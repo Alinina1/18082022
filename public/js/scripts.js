@@ -2,23 +2,32 @@ todo = JSON.parse(localStorage.getItem("myTodo"));
 
 let selectedItem = null;
 let ol;
+let inputName, inputColor;
+
+window.onbeforeunload = ()=>{
+    saveInLocalStorage();
+}
 
 window.onload = ()=>{
     ol = document.getElementById("my-todo-list");
+    inputName = document.getElementById("inputName");
+    inputColor = document.getElementById("inputColor");
     render(todo, ol);
 
     ol.addEventListener("click", function (e) {
-        if(e.target.tagName === "INPUT"){
-            if(e.target.checked){
-                e.target.parentElement.classList.add("done");
+        e = e.target;
+        if(e.tagName === "INPUT"){
+            todo[e.parentElement.getAttribute("i")].done = e.checked;
+            if(e.checked){
+                e.parentElement.classList.add("done");
             }
             else {
-                e.target.parentElement.classList.remove("done");
+                e.parentElement.classList.remove("done");
             }
         }
-        if(e.target.tagName === "LI"){
+        if(e.tagName === "LI"){
             if(selectedItem != null) selectedItem.classList.remove("checkedItem");
-            selectedItem = e.target;
+            selectedItem = e;
             selectedItem.classList.add("checkedItem");
         }
     });
@@ -26,14 +35,17 @@ window.onload = ()=>{
 
 function changeItem(){
     if(selectedItem != null){
+        inputName.value = todo[getSelectedId()].text;
+        inputColor.value = todo[getSelectedId()].color;
         document.getElementById("hidden-block").classList.remove("hidden");
     }
 }
 
 function addItem(){
-    const newItem = prompt("Какое дело еще нужно сделать?");
+    const newItem = prompt("Какое дело еще нужно сделать?", "Сделать что-то");
+    if(newItem === null) return;
     if(selectedItem != null){
-        const id = +selectedItem.attributes[0].value;
+        const id = +getSelectedId();
         todo.splice(id+1, 0, {text: newItem});
     }
     else {
@@ -43,19 +55,17 @@ function addItem(){
 }
 
 function deleteItem(){
-    if(selectedItem != null){
-        let lll = selectedItem.attributes[0].value;
-        todo.splice(lll,1);
-    }
+    if(selectedItem === null) return;
+    todo.splice(getSelectedId(),1);
     render(todo, ol);
 }
 
 function up(){
     if(selectedItem!=null){
-        const id = selectedItem.previousElementSibling.attributes[0].value;
+        const id = selectedItem.previousElementSibling.getAttribute("i");
         const prevItem = todo[id];
-        const item = todo[selectedItem.attributes[0].value];
-        todo.splice(+selectedItem.previousElementSibling.attributes[0].value, 2, item, prevItem);
+        const item = todo[getSelectedId()];
+        todo.splice(+id, 2, item, prevItem);
         const selector = `li[i="${id}"]`;
         render(todo, ol);
         document.querySelector(selector).click();
@@ -64,10 +74,10 @@ function up(){
 
 function down(){
     if(selectedItem!=null){
-        const id = selectedItem.nextElementSibling.attributes[0].value;
+        const id = selectedItem.nextElementSibling.getAttribute("i");
         const nextItem = todo[id];
-        const item = todo[selectedItem.attributes[0].value];
-        todo.splice(+selectedItem.attributes[0].value, 2, nextItem, item);
+        const item = todo[getSelectedId()];
+        todo.splice(+getSelectedId(), 2, nextItem, item);
         const selector = `li[i="${id}"]`;
         render(todo, ol);
         document.querySelector(selector).click();
@@ -81,7 +91,7 @@ function render(todo, elem){
         todoItem.i = i;
         const li = document.createElement("li");
         li.innerText = todoItem.text;
-        li.setAttribute("i", `${i}`);
+        li.setAttribute("i", i.toString());
         if(todoItem.hasOwnProperty("color")){
             li.style.backgroundColor = todoItem.color;
         }
@@ -95,14 +105,19 @@ function render(todo, elem){
         li.append(checkbox);
         i++;
     }
-    localStorage.setItem('myTodo', JSON.stringify(todo));
 }
 
 function saveNewValue(e){
-    const newValue = e.previousElementSibling.previousElementSibling.value;
-    const newColor = e.previousElementSibling.value;
-    todo[selectedItem.attributes[0].value].text = newValue;
-    todo[selectedItem.attributes[0].value].color = newColor;
+    todo[getSelectedId()].text = inputName.value;
+    todo[getSelectedId()].color = inputColor.value;
     render(todo, ol);
     e.parentElement.classList.add("hidden");
+}
+
+function getSelectedId(){
+    return selectedItem.getAttribute("i");
+}
+
+function saveInLocalStorage(){
+    localStorage.setItem('myTodo', JSON.stringify(todo));
 }
