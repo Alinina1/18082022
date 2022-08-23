@@ -1,4 +1,7 @@
-todo = JSON.parse(localStorage.getItem("myTodo"));
+let todo = JSON.parse(localStorage.getItem("myTodo"));
+if(todo === undefined){
+    todo = [];
+}
 
 let selectedItem = null;
 let ol;
